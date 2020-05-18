@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
     table.string('password').notNull()
     table.boolean('admin').notNull().defaultTo(false)
   })
-  
+
 };
 
 exports.down = function(knex, Promise) {
