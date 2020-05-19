@@ -8,25 +8,25 @@ module.exports = app => {
     return bcrypt.hashSync(password, salt)
   }
 
-  const save = async (req, resp) => {
+  const save = async (req, res) => {
     const user = { ...req.body }
     if(req.params.id) user.id = req.params.id
 
     try {
-      existsOrError(user.name, 'Nome não informado')
-      existsOrError(user.email, 'E-mail não informado')
-      existsOrError(user.password, 'Senha não informada')
-      existsOrError(user.confirmPassword, 'Confirmação de Senha inválida')
+      existsOrError(user.name, 'Nome não informado.')
+      existsOrError(user.email, 'E-mail não informado.')
+      existsOrError(user.password, 'Senha não informada.')
+      existsOrError(user.confirmPassword, 'Confirmação de Senha inválida.')
       existsOrError(user.password, user.confirmPassword,
         'Senhas não conferem')
 
       const userFromDB = await app.db('users')
         .where({ email: user.email }).first()
       if(!user.id) {
-        notExistsOrError(userFromDB, 'Usuário já cadastrado')
+        notExistsOrError(userFromDB, 'Usuário já cadastrado.')
       }
     } catch(msg) {
-      return resp.status(400).send(msg)
+      return res.status(400).send(msg)
     }
 
     user.password = encryptPassword(req.password)
@@ -36,13 +36,13 @@ module.exports = app => {
       app.db('users')
         .update(user)
         .where({ id: user.id })
-        .then(_ => resp.status(204).send())
-        .catch(err => resp.status(500).send(err))
+        .then(_ => res.status(204).send())
+        .catch(err => res.status(500).send(err))
     } else {
       app.db('users')
         .insert(user)
-        .then(_ => resp.status(204).send())
-        .catch(err => resp.status(500).send(err))
+        .then(_ => res.status(204).send())
+        .catch(err => res.status(500).send(err))
     }
   }
 
@@ -53,5 +53,14 @@ module.exports = app => {
       .catch(err => res.status(500).send(err))
   }
 
-  return { save, get }
+  const getById = (req, res) => {
+    app.db('users')
+      .select('id', 'name', 'email', 'admin')
+      .where({ id: req.params.id })
+      .first()
+      .then(user => res.json(user))
+      .catch(err => res.status(500).send(err))
+  }
+
+  return { save, get, getById }
 }
