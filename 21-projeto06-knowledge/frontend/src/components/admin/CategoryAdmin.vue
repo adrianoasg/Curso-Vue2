@@ -8,10 +8,9 @@
             :readonly="mode === 'remove'"
             placeholder="Informe o Nome da Categoria..." />
         </b-form-group>
-        <b-form-group label="Categoria Pai:" label-for="category-parent-id">
+        <b-form-group label="Categoria Pai:" label-for="category-parentId">
           <b-form-select v-if="mode === 'save'"
             id="category-parentId"
-            :readonly="mode === 'remove'"
             :options="categories" v-model="category.parentId" />
           <b-form-input v-else
             id="category-parentId" type="text"
@@ -49,7 +48,6 @@ export default {
       mode: 'save',
       category: {},
       categories: [],
-      selected: null,
       fields: [
         { key: 'id', label: 'Código', sortable: true },
         { key: 'name', label: 'Nome', sortable: true },
