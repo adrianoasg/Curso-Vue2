@@ -30,7 +30,7 @@ export default {
   name: 'Auth',
   data() {
     return {
-      showSignup: true,
+      showSignup: false,
       user: {}
     }
   },
@@ -53,7 +53,7 @@ export default {
         })
         .catch(showError)
     }
-  },
+  }
 }
 </script>
 
@@ -80,6 +80,7 @@ export default {
     font-size: 1.2rem;
     font-weight: 100;
     margin-top: 10px;
+    margin-bottom: 15px;
   }
 
   .auth-modal input {
@@ -97,17 +98,17 @@ export default {
     padding: 5px 15px;
   }
 
-.auth-modal a {
-  margin-top: 35px;
-}
+  .auth-modal a {
+    margin-top: 35px;
+  }
 
-.auth-modal hr {
-  border: 0;
-  width: 100%;
-  height: 1px;
-  background-image: linear-gradient(to right,
-    rgba(120, 120, 120, 0),
-    rgba(120, 120, 120, 0.75),
-    rgba(120, 120, 120, 0));
-}
+  .auth-modal hr {
+    border: 0;
+    width: 100%;
+    height: 1px;
+    background-image: linear-gradient(to right,
+      rgba(120, 120, 120, 0),
+      rgba(120, 120, 120, 0.75),
+      rgba(120, 120, 120, 0));
+  }
 </style>
